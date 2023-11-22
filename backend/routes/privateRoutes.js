@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/your-menu', authRequired, controllers.getMenu);
 router.get('/your-article/:id', authRequired, controllers.getArticle);
-router.post('/save',authRequired,file, controllers.save);
+router.post('/save',authRequired, validationSchema(authCreateArticle),file, controllers.save);
 router.delete('/article/:id', authRequired, controllers.delete);
 router.put('/article/:id', authRequired, file, controllers.update);
 

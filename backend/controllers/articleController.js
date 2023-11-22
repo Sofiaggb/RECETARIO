@@ -68,7 +68,7 @@ const controllers = {
 
          await article.save();
 
-         res.json(article);
+         res.status(200).json(article);
 
       } catch (error) {
          return res.status(500).send({

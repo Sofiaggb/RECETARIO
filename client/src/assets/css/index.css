@@ -6,3 +6,10 @@ body{
   background: #202020;
   color: white;
 }
+
+@layer components{
+  .card{
+    @apply rounded-xl shadow-lg m-2
+  }
+}
+

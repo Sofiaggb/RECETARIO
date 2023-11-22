@@ -13,6 +13,7 @@ const app = express();
 // midlewares
 app.use(cors({
     origin: 'http://localhost:5173',
+    credentials: true
 }));
 // logger es una funcion midleware, obtener informacion antes que llegue a la url
 app.use(morgan('dev')) ;//debuelve el metodo y la url a la que se ingreso

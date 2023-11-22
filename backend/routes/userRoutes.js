@@ -10,5 +10,6 @@ router.post('/register', validationSchema(registerAuth) ,UserControllers.registe
 router.post('/login', validationSchema(loginAuth), UserControllers.login);
 router.post('/logout', UserControllers.logout);
 router.get('/profile', authRequired ,UserControllers.profile);
+router.get('/verify', UserControllers.verify)
 
 export default router;
