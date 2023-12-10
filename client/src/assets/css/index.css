@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body{
-  background: #202020;
+  background: rgb(23, 23, 23);
   color: white;
 }
+
 
 @layer components{
   .card{

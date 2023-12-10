@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { createRecipeRequest, deleteRecipeRequest, getMenuRequest, getPublicMenuRequest, getRecipeRequest, updateRecipeRequest } from "../api/recipes";
+import { createRecipeRequest, deleteRecipeRequest, getMenuRequest, getPrivSearchRequest, getPublicMenuRequest, getRecipeRequest, getSearchRequest, updateRecipeRequest } from "../api/recipes";
 
 export const RecipeContext = createContext();
 
@@ -78,6 +78,32 @@ export const RecipeProvider = ({ children }) => {
        }
     }
 
+    const searchRecipes = async (value) => {
+        try {
+            const search = await getSearchRequest(value);
+            setRecipes(search.data);
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data)
+                return
+            }
+            setErrors([error.response.data.message])
+        }
+    }
+
+    const searchPrivRecipes = async (value) => {
+        try {
+            const search = await getPrivSearchRequest(value);
+            setRecipes(search.data);
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data)
+                return
+            }
+            setErrors([error.response.data.message])
+        }
+    }
+
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
@@ -91,7 +117,8 @@ export const RecipeProvider = ({ children }) => {
         <RecipeContext.Provider
             value={{
                 recipes, createRecipe, getMenu, getPublicMenu, recipe,
-                deleteRecipe, updateRecipe, getRecipe , errors
+                deleteRecipe, updateRecipe, getRecipe , errors, 
+                searchRecipes, searchPrivRecipes
             }}>
             {children}
         </RecipeContext.Provider>

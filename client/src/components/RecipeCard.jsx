@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 export default function RecipeCard({ recipe }) {
 
     // const {deleteRecipe} = useRecipes()
+    // console.log(recipe._id)
 
     return (
 
@@ -28,6 +29,8 @@ export default function RecipeCard({ recipe }) {
                     <p className=" text-xs text-slate-600 p-2 sm:p-2">{new Date(recipe.date).toLocaleDateString()}</p>
 
                     <h1 className="md:text-2xl font-normal mt-0.5 m-2 text-lg">{recipe.title}</h1>
+                    <p className=" text-xs text-slate-300 p-2 sm:p-2">{recipe.type}</p>
+
                     </Link>
                     {/* <div >
                     <button className=" text-center  bg-red-700 py-2 rounded-lg font-medium mt-4 hover:bg-red-500

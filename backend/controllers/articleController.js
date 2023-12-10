@@ -32,7 +32,7 @@ const controllers = {
          const article = await ArticleModel.findById(id);
 
          if (!article) return res.status(404).json({
-            message: "no se encontro el articulo"
+            message: "article not found"
          });
 
          res.status(200).json(article);
@@ -40,6 +40,33 @@ const controllers = {
       } catch (error) {
          return res.status(500).send({
             message: error.message
+         });
+      }
+   },
+
+   search: async (req, res) => {
+      const value = req.params.search;
+      try {
+         const search = await ArticleModel.find({
+            $and: [
+              { user: req.decoded.id },
+              { $or: [
+                { title: { $regex: value, $options: 'i' } },
+                { type: { $regex: value, $options: 'i' } }
+              ]}
+            ]
+          }).populate('user');
+          
+          if(search.length == 0) return res.status(404).json({
+            message: "Sorry, no matches were found. "
+         });
+          
+
+          res.status(200).json(search);
+   
+      } catch (error) {
+         return res.status(500).send({
+            message : error.message
          });
       }
    },

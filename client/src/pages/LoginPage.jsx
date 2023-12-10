@@ -12,7 +12,6 @@ export default function LoginPage() {
 
   const onSubmit = handleSubmit((data) => {
     singin(data);
-    console.log(data)
   });
   useEffect(() => {
     if (isAuthenticated) return navigate('/menu')

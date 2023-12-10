@@ -9,6 +9,16 @@ export default function FormRecipePage() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const typeOptions =  [
+    { value: '', label: 'Select...' },
+    { value: 'desserts', label: 'Desserts' },
+    { value: 'juices', label: 'Juices' },
+    { value: 'soups', label: 'Soups' },
+    { value: 'salads', label: 'Salads' },
+    { value: 'meat and chicken', label: 'Meat and Chicken' },
+    { value: 'seafood and fish', label: 'Seafood and Fish' },
+  ];
+
   useEffect(() => {
     const loadRecipe = async () => {
       if (params.id) {
@@ -113,9 +123,17 @@ export default function FormRecipePage() {
           }
 
           <label htmlFor="type" className=' font-mono'>Type</label>
-          <input type="text" {...register("type", { required: true })}
-            className=' w-full bg-zinc-500 text-white px-4 py-2 my-2 rounded-md'
-            placeholder="Typo" />
+          
+          <select {...register("type", {required: true})}
+            className=' w-full bg-zinc-500 text-white px-4  py-2 my-2 rounded-md'
+            >
+              {typeOptions.map((option, i) => (
+                <option key={i} value={option.value}  className=''>
+                  {option.label}
+                </option>
+              ))}
+          </select>
+          
           {
             errors.type && (
               <p className=" text-red-500">Type is required</p>

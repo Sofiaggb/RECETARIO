@@ -1,26 +1,50 @@
-import { useEffect } from "react"
-import { useNavigate, useParams, Link } from "react-router-dom"
-import { useRecipes } from "../context/RecipeContext"
-import noImagen from "../assets/images/noImagen.jpg"
-import { useAuth } from "../context/authContext"
-import ErrorPage from "./ErrorPage"
-
+import { useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { useRecipes } from "../context/RecipeContext";
+import { useAuth } from "../context/authContext";
+import Swal from "sweetalert2";
+import noImagen from "../assets/images/noImagen.jpg";
+import ErrorPage from "./ErrorPage";
 
 export default function RecipePage() {
 
-  const params = useParams()
-  const { getRecipe, recipe, deleteRecipe } = useRecipes()
-  const { user } = useAuth()
+  const params = useParams();
+  const { getRecipe, recipe, deleteRecipe } = useRecipes();
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRecipe(params.id)
-
+    getRecipe(params.id);
   }, [])
 
   const deleteRes = async (recipe) => {
-    await deleteRecipe(recipe);
-    await navigate('/menu');
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      color: "#fff",
+      confirmButtonColor: "#187a1d",
+      cancelButtonColor: "#a30606",
+      confirmButtonText: "Yes, delete it!",
+      background: '#3a3737'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteRecipe(recipe);
+        await navigate('/menu');
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your recipe has been deleted.",
+          icon: "success",
+          color: "#fff",
+          confirmButtonColor: "#187a1d",
+          background: '#3a3737'
+
+        });
+      }
+    });
+
   }
 
   if (!recipe) return (<ErrorPage />);
@@ -31,7 +55,7 @@ export default function RecipePage() {
         className="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8"
       >
 
-        {recipe.user == user.id && (
+        {isAuthenticated && recipe.user == user.id && (
           <div className="inline-flex rounded-lg border border-gray-800  bg-zinc-700 00 p-1">
             <Link to={'/update-recipe/' + recipe._id}
               className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-base text-white hover:text-lime-500 focus:relative"
@@ -81,30 +105,34 @@ export default function RecipePage() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <div
-            className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full"
+            className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-96"
           >
             {!recipe.image ? (
               <img
                 alt="no hay imagen"
                 src={noImagen}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-96 w-full object-cover"
               />
             ) : (
               <img
                 alt="Party"
                 src={recipe.image.secure_url}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0  h-96 w-full object-cover"
               />
             )}
 
           </div>
 
-          <div className="lg:py-24 space-y-4 ">
-            <h2 className="text-3xl font-bold sm:text-4xl">{recipe.title}</h2>
-
-            <p className="mt-4">{recipe.ingredients}</p>
-            <p> {recipe.preparation}</p>
-
+          <div className="lg:py-24 space-y-4 " style={{whiteSpace: "pre-wrap"}}>
+            <h1 className="text-3xl font-bold sm:text-4xl pb-8">{recipe.title}</h1>
+            <h2 className="text-2xl text-lime-400 sm:text-3xl">Ingredientes</h2>
+            
+              <p className="mt-4 font-serif" >{recipe.ingredients}</p>
+          
+            <h2 className="text-2xl text-lime-400 sm:text-3xl">Preparación</h2>
+            
+              <p> {recipe.preparation}</p>
+            
           </div>
         </div>
       </div>

@@ -1,9 +1,11 @@
 import { useRecipes } from '../context/RecipeContext';
 import { useEffect } from "react";
-import RecipeCard from '../components/RecipeCard';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
+// componentes
+import RecipeCard from '../components/RecipeCard';
+import Search from '../components/Search';
 
 export default function HomePage() {
 
@@ -20,6 +22,7 @@ export default function HomePage() {
     bg-[url(https://res.cloudinary.com/do1xfb26d/image/upload/v1700516051/foodPage/food-1898194_1920_vyjrvd.jpg)]
      bg-cover bg-center bg-no-repeat">
         <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center" >
+
           <div className="mx-auto max-w-6xl text-center">
             <h1 className="text-3xl font-extrabold sm:text-5xl">
               Welcome to C&C.
@@ -44,10 +47,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      <Search searchPriv='false'/>
+
+
       {recipes.length > 0 && (
-        <div className="flex items-center justify-center min-h-screen container mx-auto">
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4">
-            {
+        <div className="flex items-center justify-center container mx-auto">
+          <div className="grid  grid-cols-2  md:grid-cols-3 lg:grid-cols-4">
+            { 
               recipes.map(recipe => (
                 <RecipeCard recipe={recipe} key={recipe._id} />
               ))

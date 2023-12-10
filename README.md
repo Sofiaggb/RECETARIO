@@ -32,4 +32,3 @@ Este recetario de cocina es un espacio donde puedes consultar y almacenar las re
 - guardar una imagen 
 - buscador
 - creación de usuario
-

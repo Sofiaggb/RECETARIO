@@ -25,12 +25,14 @@ export default function Router() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/search/:search" element={<HomePage />} />
             <Route path="/recipe/:id" element={<RecipePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
             <Route element={<ProtectedRoutes />}>
               <Route path="/menu" element={<MenuPage />} />
+              <Route path="/searcher/:searcher" element={<MenuPage />} />
               <Route path="/add-recipe" element={<FormRecipePage />} />
               <Route path="/update-recipe/:id" element={<FormRecipePage />} />
               <Route path="/porfile" element={<PorfilePage />} />
