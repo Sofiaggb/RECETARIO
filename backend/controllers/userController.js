@@ -2,8 +2,7 @@ import UserModel from "../models/userModel.js";
 import bcrypt from "bcryptjs"; //encriptar
 import { createAccessToken } from "../libs/jwt.js"; //hacer tokens - pases 
 import jwt  from "jsonwebtoken";
-import 'dotenv/config';
-
+import { TOKEN_SECRET } from "../config.js";
 
 const UserControllers = {
 
@@ -107,7 +106,7 @@ const UserControllers = {
 
         if (!token) return res.status(401).json({message: 'Unauthorized'});
 
-        jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
+        jwt.verify(token, TOKEN_SECRET, async (err, user) => {
             if(err) return  res.status(401).json({message: 'Unauthorized'});
 
             const userFound = await UserModel.findById(user.id);

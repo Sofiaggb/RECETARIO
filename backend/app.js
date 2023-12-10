@@ -7,11 +7,13 @@ import privateRouter from "./routes/privateRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import publicRouter from "./routes/publicRoutes.js";
 
+import { FRONTEND_URL } from "./config.js";
+
 const app = express();
 
 // midlewares
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: FRONTEND_URL,
     credentials: true
 }));
 // logger es una funcion midleware, obtener informacion antes que llegue a la url
