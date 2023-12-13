@@ -30,7 +30,7 @@ const UserControllers = {
             const userSave = await user.save();
             const token = await createAccessToken({ id: userSave._id });
 
-            res.cookie('token', token);
+            res.cookie('token', token, { sameSite: 'None', secure: true });
            
             res.status(200).json({
                 id: userSave._id,
@@ -63,7 +63,7 @@ const UserControllers = {
 
             const token = await createAccessToken({ id: userFound._id });
 
-            res.cookie('token', token);
+            res.cookie('token', token, { sameSite: 'None', secure: true });
             res.status(200).json({
                 id: userFound._id,
                 username: userFound.username,
