@@ -37,4 +37,10 @@ Este recetario de cocina es un espacio donde puedes consultar y almacenar las re
 
 ## Link
 
+Por favor abre primero el link del backend, ya que estoy usando el servicio de "Render" de forma gratuita y este se desconecta si tiene cierto tiempo de inactividad.
+
+### Backend
+https://backen-recetario.onrender.com
+
+### Frontend
 https://frontend-recetario.onrender.com
